@@ -8,11 +8,10 @@
 int year = 0;
 char *post = NULL;
 char name[20];
-
+char postyear[20];
 
 //Structs
 struct Info{
-	
 	int size;
 	double cost;
 	int weight;
@@ -20,69 +19,41 @@ struct Info{
 
 typedef struct Info Info_s;
 
-FILE *data;
-FILE *out;
-
 //Prototypes
-void intialize(FILE *data,FILE *out);
-void delivery(FILE *data,FILE *out,Info_s *myInfo);
-void myclose();
+void delivery();
 
 int main(int argc, char **argv){
 	Info_s *myInfo = NULL;
-	myInfo = (Info_s *)malloc(NUM_OF_CATEGORIES*sizeof(Info_s));
+	myInfo = (Info_s *)calloc(NUM_OF_CATEGORIES,sizeof(Info_s));
 	
-	data = fopen(argv[1],"r");
+	//printf("%s\n",argv[1]);
+	
+	//Initialize
+	FILE *data;
+	FILE *out;
+	sprintf(postyear,"%s%s",argv[1],".txt");
+	data = fopen(postyear,"r");
 	if (data == NULL){
-			printf("ero");
+		perror("error opening file data\n");
 		exit(1);
 	}
-	
-	//intialize(data,out);
 	
 	fscanf(data,"%d",&year);
 	sprintf(name,"%s%d","Invoice",year);
-	printf("%s\n",name);
-	out = fopen(name,"w");
+	
+	out = fopen(name,"a");
 	if(out == NULL){
-		printf("ero2");
+		perror("error opening file out");
 		exit(1);
 	}
+	//End of initialize
 	
-	
-	printf("%s\n",name);
-	
-
-	fprintf(out,"Deliveries of %d\r\n",year);
-	
-	
-	
-	
-	myclose();
+	close(data);
+	close(out);
 	return 0;
 }
 
-void intialize(FILE *data,FILE *out){
 
-	
-	
-}
+void delivery(){
 
-void delivery(FILE *data,FILE *out,Info_s *myInfo){
-	int i = 0;
-
-
-//	for(i = 0; i<NUM_OF_CATEGORIES; i++){
-//		fscanf(data,);
-		
-		
-//	}
-	
-	
-	
-}
-void myclose(){
-	close(data);
-	close(out);
-	
 }
